@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
- <title>罗飞技术博客</title>
+ <title>罗飞的技术博客</title>
  <link href="http://luofei614.github.io/" rel="self"/>
  <link href="http://luofei614.github.io"/>
- <updated>2014-02-15T21:45:29+08:00</updated>
+ <updated>2014-02-15T21:51:34+08:00</updated>
  <id>http://luofei614.github.io</id>
  <author>
    <name>luofei614</name>
