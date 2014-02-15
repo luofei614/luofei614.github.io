@@ -1,3 +1,5 @@
+评论？ 
+
 {% if site.JB.comments.provider and page.comments != false %}
 
 {% case site.JB.comments.provider %}
