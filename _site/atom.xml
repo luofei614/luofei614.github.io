@@ -4,13 +4,21 @@
  <title>Jekyll Bootstrap</title>
  <link href="http://username.github.io/" rel="self"/>
  <link href="http://username.github.io"/>
- <updated>2014-02-15T15:50:24+08:00</updated>
+ <updated>2014-02-15T15:53:06+08:00</updated>
  <id>http://username.github.io</id>
  <author>
    <name>Name Lastname</name>
    <email>blah@email.test</email>
  </author>
 
+ 
+ <entry>
+   <title>Hello World</title>
+   <link href="http://username.github.io/2014/02/15/hello-world"/>
+   <updated>2014-02-15T00:00:00+08:00</updated>
+   <id>http://username.github.io/2014/02/15/hello-world</id>
+   <content type="html">&lt;p&gt;什么？？？？ 哈哈？&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Jekyll Introduction</title>
