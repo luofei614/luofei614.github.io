@@ -1,8 +1,9 @@
-var blog=angular.module('blog',['ngRoute','ngResource','ngSanitize','checklist-model']);
+var blog=angular.module('blog',['ngRoute','ngResource','ngSanitize','checklist-model','angularMoment']);
 //###########站点配置
 blog.constant('blogConfig',{
     "site_name":"罗飞的技术分享博客",
     "pagesize":10,//每页显示文章数
+    "denglu_appid":"95324denG6DIGXxNyloYj1R11CcIa5",
     "categories":["php","go","python","javascript","bootstrap","angularjs"],
     "AVOS_ID":"l33c40ot1nhdgzkc5ljh2dzn2i8z4jaxlr40zyhmqbxjc1lp",
     "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y"
@@ -91,6 +92,30 @@ blog.filter('unsafe', ['$sce', function ($sce) {
     };
 }]);
 
+//文章正文分隔显示
+blog.filter('more',function(){
+    return function(content)
+    {
+        if(typeof(content)!='string')
+        {
+            return content;
+        }
+        return content.split('[more]')[0]; 
+    }
+});
+//文章全部显示
+blog.filter('all',function(){
+    return function(content)
+    {
+        if(typeof(content)!='string')
+        {
+            return content;
+        }
+        return content.replace('[more]',''); 
+    }
+});
+
+
 //##########指令
 blog.directive('blogEditor',function(){
     return {
@@ -98,6 +123,7 @@ blog.directive('blogEditor',function(){
         require:"?ngModel",
         link:function(scope,element,attrs,ngModel){
             	KindEditor.basePath = '/editor/';
+                var inited=false;
 			    KindEditor.create(element,{
                     minWidth :560,
 					allowPreviewEmoticons : false,
@@ -108,8 +134,13 @@ blog.directive('blogEditor',function(){
                        if(ngModel)
                        {
                            // ngModel.$setViewValue(element.val());
-                           element.trigger('change');
+                           if(inited)
+                           {
+                                //第一次加载不执行change ，否则 formname.fieldname.$dirty 判断会有误。 
+                                element.trigger('change');
+                           }
                        }
+                       inited=true;
                     },
 					items : [
 						'source','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
@@ -136,7 +167,12 @@ blog.config(function($routeProvider,$locationProvider,$httpProvider,blogConfig){
             return request; 
         }
         //AVOS的特殊处理， 在更新数据时，不能传递createAt和updateAt
-        delete request['$$hashKey'];
+        for(k in request)
+        {
+            //删除$resource 对象自带的key
+            if(k.charAt(0)=='$')
+                delete request[k];
+        }
         delete request.createdAt;
         delete request.updatedAt;
         return JSON.stringify(request);
@@ -145,20 +181,23 @@ blog.config(function($routeProvider,$locationProvider,$httpProvider,blogConfig){
     $httpProvider.responseInterceptors.push('blogInterceptor');
     $locationProvider.html5Mode(true).hashPrefix('!');
     $routeProvider.when('/',{
-        templateUrl:"./view/home.tpl.html",
+        templateUrl:"/view/home.tpl.html",
         controller:"home"
     }).when('/about',{
-        templateUrl:"./view/about.tpl.html",
+        templateUrl:"/view/about.tpl.html",
         controller:"about"
     }).when('/works',{
-        templateUrl:"./view/works.tpl.html",
+        templateUrl:"/view/works.tpl.html",
         controller:"works"
     }).when('/video',{
-        templateUrl:"./view/video.tpl.html",
+        templateUrl:"/view/video.tpl.html",
         controller:"video"
     }).when('/guestbook',{
-        templateUrl:"./view/guestbook",
+        templateUrl:"/view/guestbook.tpl.html",
         controller:"guestbook"
+    }).when('/article/:objectId',{
+        templateUrl:'/view/article.tpl.html',
+        controller:"article"
     }).otherwise({
         redirectTo:"/"
     })
@@ -168,7 +207,7 @@ blog.run(function($rootScope,blogConfig,blogModal){
     $rootScope.categories=blogConfig.categories;
     $rootScope.site_name=blogConfig.site_name;
     $rootScope.login=function(){
-        blogModal('./view/login.tpl.html','modal.login');
+        blogModal('/view/login.tpl.html','modal.login');
     }
     if(sessionStorage.getItem('username'))
     {
@@ -177,7 +216,7 @@ blog.run(function($rootScope,blogConfig,blogModal){
     $rootScope.edit=function(article){
         var scope=$rootScope.$new();
         scope.article=article || {};
-        blogModal('./view/edit.tpl.html','modal.edit',scope); 
+        blogModal('/view/edit.tpl.html','modal.edit',scope); 
     }
 });
 
@@ -240,6 +279,15 @@ blog.controller('home',function($scope,$rootScope,article,$location,blogConfig,$
         $location.search(search);
     }
 
+});
+
+blog.controller('article',function($scope,$rootScope,article,$routeParams,blogConfig){
+   article.get({objectId:$routeParams.objectId},function(data){
+        $scope.article=data; 
+        $rootScope.top_title=data.title;
+        //评论
+        $scope.script="<script type='text/javascript' charset='utf-8' src='http://open.denglu.cc/connect/commentcode?appid="+blogConfig.denglu_appid+"&postid="+data.objectId+"&title="+data.title+"'></script>";
+   }); 
 });
 
 //登录弹窗口的控制器

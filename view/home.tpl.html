@@ -13,14 +13,14 @@
     </p>
     <hr>
     <p>
-    <span class="glyphicon glyphicon-time"></span> Posted on {{article.createdAt}}</p>
+    <span class="glyphicon glyphicon-time"></span> 发表于 {{article.createdAt|amCalendar}}</p>
     <hr>
     <img src="http://placehold.it/900x300" class="img-responsive">
     <hr>
-    <div ng-bind-html="article.content|unsafe">
+    <div ng-bind-html="article.content|more|unsafe">
     </div>
     <div class="action_bar clearfix">
-    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="btn btn-primary" href="/article/{{article.objectId}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
     <a class="btn btn-primary pull-right" ng-show="username" href="javascript:void(0);" ng-click="del($index)"><i class="glyphicon glyphicon-trash"></i>删除</a>
     <a class="btn btn-primary pull-right" ng-show="username" href="javascript:void(0);" ng-click="edit(article);"><i class="glyphicon glyphicon-pencil"></i>编辑</a>
     </div>
