@@ -286,7 +286,7 @@ blog.controller('article',function($scope,$rootScope,article,$routeParams,blogCo
         $scope.article=data; 
         $rootScope.top_title=data.title;
         //评论
-        $scope.script="<script type='text/javascript' charset='utf-8' src='http://open.denglu.cc/connect/commentcode?appid="+blogConfig.denglu_appid+"&postid="+data.objectId+"&title="+data.title+"'></script>";
+       // $scope.script="<script type='text/javascript' charset='utf-8' src='http://open.denglu.cc/connect/commentcode?appid="+blogConfig.denglu_appid+"&postid="+data.objectId+"&title="+data.title+"'></script>";
    }); 
 });
 
