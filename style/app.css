@@ -1,10 +1,13 @@
 body {
 	margin-top: 100px; /* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
+    line-height:170%;
 }
 
 footer {
 	margin: 50px 0;
 }
+
+
 .action_bar{
     margin-top:20px;
 }
@@ -19,4 +22,25 @@ footer {
 
 #ds-thread #ds-reset .ds-comments{
     background:#4e5d6c!important;
+}
+.about_me{
+    word-break:break-all;
+    font-size:14px;
+}
+
+#ds-reset .ds-highlight{
+    color:#df691a!important;
+}
+#ds-thread #ds-reset .ds-comment-body p{
+    color:#EBEBEB;
+}
+
+#ds-thread  {
+  font-family:Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif!important;
+}
+#ds-thread #ds-reset.ds-no-opacity li.ds-post{
+    border-top:#999 1px solid!important;
+}
+#ds-thread #ds-reset.ds-no-opacity .ds-comments, #ds-thread #ds-reset.ds-no-opacity .ds-paginator{
+    border-bottom:#999 1px solid!important;
 }
