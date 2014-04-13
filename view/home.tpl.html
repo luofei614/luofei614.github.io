@@ -1,0 +1,37 @@
+
+<h1 ng-show="!articles">文章加载中...</h1>
+
+<div ng-show="articles.length==0">
+    <h1><a href="#">帮助说明</a></h1>
+    帮助说明
+</div>
+
+<div ng-repeat="article in articles">
+    <!-- blog entry -->
+    <h1><a href="#">{{article.title}}</a></h1>
+    <p class="lead">by <a href="javascript:void(0);">{{article.by}}</a>
+    </p>
+    <hr>
+    <p>
+    <span class="glyphicon glyphicon-time"></span> Posted on {{article.createdAt}}</p>
+    <hr>
+    <img src="http://placehold.it/900x300" class="img-responsive">
+    <hr>
+    <div ng-bind-html="article.content|unsafe">
+    </div>
+    <div class="action_bar clearfix">
+    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+    <a class="btn btn-primary pull-right" ng-show="username" href="javascript:void(0);" ng-click="del($index)"><i class="glyphicon glyphicon-trash"></i>删除</a>
+    <a class="btn btn-primary pull-right" ng-show="username" href="javascript:void(0);" ng-click="edit(article);"><i class="glyphicon glyphicon-pencil"></i>编辑</a>
+    </div>
+    <hr>
+</div>
+
+<!-- pager -->
+<ul class="pager">
+    <li class="previous" ng-class="{disabled:disable_page_prev}"><a href="javascript:void(0);" ng-click="page_prev();">&larr;上一页</a>
+    </li>
+    <li class="next" ng-class="{disabled:disable_page_next}"><a href="javascript:void(0);" ng-click="page_next();">下一页 &rarr;</a>
+    </li>
+</ul>
+
