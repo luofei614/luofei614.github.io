@@ -16,3 +16,7 @@ footer {
     margin-top:10px;
     color:#df691a;
 }
+
+#ds-thread #ds-reset .ds-comments{
+    background:#4e5d6c!important;
+}

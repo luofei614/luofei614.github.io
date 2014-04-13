@@ -15,7 +15,7 @@
     <p>
     <span class="glyphicon glyphicon-time"></span> 发表于 {{article.createdAt|amCalendar}}</p>
     <hr>
-    <img src="http://placehold.it/900x300" class="img-responsive">
+    <img ng-src="{{article.pic}}" class="img-responsive">
     <hr>
     <div ng-bind-html="article.content|more|unsafe">
     </div>

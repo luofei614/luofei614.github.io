@@ -3,10 +3,16 @@ var blog=angular.module('blog',['ngRoute','ngResource','ngSanitize','checklist-m
 blog.constant('blogConfig',{
     "site_name":"罗飞的技术分享博客",
     "pagesize":10,//每页显示文章数
-    "denglu_appid":"95324denG6DIGXxNyloYj1R11CcIa5",
+    "duoshuo_domain":"luofeico",//多说评论，你在多说上申请的二级域名
     "categories":["php","go","python","javascript","bootstrap","angularjs"],
     "AVOS_ID":"l33c40ot1nhdgzkc5ljh2dzn2i8z4jaxlr40zyhmqbxjc1lp",
-    "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y"
+    "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y",
+    "header_pics":[
+        {name:"图片1",url:"/image/header_pic/1.png"},
+        {name:"图片2",url:"/image/header_pic/2.png"},
+        {name:"图片3",url:"/image/header_pic/3.png"},
+        {name:"图片4",url:"/image/header_pic/4.png"}
+    ]
 });
 //##########服务
 blog.factory('article',function($resource){
@@ -216,6 +222,7 @@ blog.run(function($rootScope,blogConfig,blogModal){
     $rootScope.edit=function(article){
         var scope=$rootScope.$new();
         scope.article=article || {};
+        scope.header_pics=blogConfig.header_pics;
         blogModal('/view/edit.tpl.html','modal.edit',scope); 
     }
 });
@@ -281,12 +288,23 @@ blog.controller('home',function($scope,$rootScope,article,$location,blogConfig,$
 
 });
 
-blog.controller('article',function($scope,$rootScope,article,$routeParams,blogConfig){
+blog.controller('article',function($scope,$rootScope,article,$routeParams,blogConfig,$location){
    article.get({objectId:$routeParams.objectId},function(data){
         $scope.article=data; 
         $rootScope.top_title=data.title;
-        //评论
-       // $scope.script="<script type='text/javascript' charset='utf-8' src='http://open.denglu.cc/connect/commentcode?appid="+blogConfig.denglu_appid+"&postid="+data.objectId+"&title="+data.title+"'></script>";
+        $scope.script=['<div class="ds-thread" data-thread-key="'+data.objectId+'" data-title="'+data.title+'" data-url="'+$location.absUrl()+'"></div>',
+'<script type="text/javascript">',
+'var duoshuoQuery = {short_name:"'+blogConfig.duoshuo_domain+'"};',
+	'(function() {',
+		"var ds = document.createElement('script');",
+		"ds.type = 'text/javascript';ds.async = true;",
+		"ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';",
+		"ds.charset = 'UTF-8';",
+		"(document.getElementsByTagName('head')[0] ",
+		 "|| document.getElementsByTagName('body')[0]).appendChild(ds);",
+	"})()",
+"</script>"].join('');
+
    }); 
 });
 
@@ -307,7 +325,7 @@ blog.controller('modal.login',function($scope,userlogin,$route,$http,$rootScope)
 });
 
 //发布文章弹窗口
-blog.controller('modal.edit',function($scope,article,$location){
+blog.controller('modal.edit',function($scope,article,$location,$route){
     $scope.save=function()
     {
         if($scope.article.objectId)
@@ -323,6 +341,7 @@ blog.controller('modal.edit',function($scope,article,$location){
                 alert('发布成功'); 
                 $('#blog-modal').modal('hide');
                 $location.path('/');
+                $route.reload();
             }); 
         }
     }

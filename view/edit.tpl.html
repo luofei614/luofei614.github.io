@@ -8,7 +8,19 @@
         <input type="text" class="form-control" name="title" placeholder="文章标题" required ng-model="article.title"  /> 
         <div ng-show="articleform.title.$dirty && articleform.title.$error.required" class="error">标题必填!</div>
     </div>
-
+    <div class="form-inline">
+        主题图片：
+        <label class="radio" ng-repeat="pic in header_pics">
+            <input type="radio" name="sys_pic" ng-click="article.pic=pic.url"  value="{{pic.url}}"> {{pic.name}} 
+            &nbsp;&nbsp;&nbsp;
+        </label>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="pic" placeholder="输入主题图片，http://" required ng-model="article.pic"  /> 
+        <div class="error" ng-show="articleform.pic.$dirty && articleform.pic.$error.required">
+            主题图片必须填写
+        </div>
+    </div>
     <div class="form-group">
          <textarea placeholder="文章内容" name="content" blog-editor required  ng-model="article.content" style="width:400px;height:200px;"></textarea>
         <div ng-show="articleform.content.$dirty && articleform.content.$error.required" class="error">文章内容必填!</div>
