@@ -352,3 +352,16 @@ blog.controller('works',function($scope,$rootScope){
     $rootScope.top_title="开源作品";
 });
 
+
+blog.controller('video',function($scope,$rootScope){
+    $rootScope.nav="video";
+    $rootScope.top_title="视频教程";
+});
+
+
+blog.controller('about',function($scope,$rootScope){
+    $rootScope.nav="about";
+    $rootScope.top_title="关于我";
+});
+
+
