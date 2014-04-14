@@ -1,19 +1,27 @@
 
+<div ng-show="kw" class="search_kw">
+    搜索关键词：“{{kw}}”
+</div>
+<div ng-show="cate" class="search_kw">
+    分类：{{cate}} 
+</div>
 <h1 ng-show="!articles">文章加载中...</h1>
 
 <div ng-show="articles.length==0">
-    <h1><a href="#">帮助说明</a></h1>
-    帮助说明
+    <h3>没有找到相关文章!</h3>
 </div>
 
 <div ng-repeat="article in articles">
     <!-- blog entry -->
     <h1><a href="/article/{{article.objectId}}">{{article.title}}</a></h1>
-    <p class="lead">by <a href="javascript:void(0);">{{article.by}}</a>
-    </p>
-    <hr>
-    <p>
-    <span class="glyphicon glyphicon-time"></span> 发表于 {{article.createdAt|amCalendar}}</p>
+    <div class="clearfix">
+        <div class="pull-left">
+        by <a href="javascript:void(0);">{{article.by}}</a>
+        </div>
+         <div class="pull-right">
+             <span class="glyphicon glyphicon-time"></span> 发表于 {{article.createdAt|amCalendar}}
+         </div>
+    </div>
     <hr>
     <img ng-src="{{article.pic}}" class="img-responsive">
     <hr>

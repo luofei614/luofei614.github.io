@@ -241,6 +241,7 @@ blog.controller('home',function($scope,$rootScope,article,$location,blogConfig,$
     var where={};
     if(search.cate)
     {
+        $rootScope.cate=search.cate; 
         where.cate={'$all':[search.cate]}
     }
     if(search.kw)

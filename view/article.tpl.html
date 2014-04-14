@@ -1,10 +1,13 @@
 <!-- blog entry -->
 <h1><a href="/article/{{article.objectId}}">{{article.title}}</a></h1>
-<p class="lead">by <a href="javascript:void(0);">{{article.by}}</a>
-</p>
-<hr>
-<p>
-<span class="glyphicon glyphicon-time"></span> Posted on {{article.createdAt}}</p>
+<div class="clearfix">
+        <div class="pull-left">
+        by <a href="javascript:void(0);">{{article.by}}</a>
+        </div>
+         <div class="pull-right">
+             <span class="glyphicon glyphicon-time"></span> 发表于 {{article.createdAt|amCalendar}}
+         </div>
+</div>
 <hr>
 <img src="{{article.pic}}" class="img-responsive">
 <hr>
