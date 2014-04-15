@@ -4,7 +4,7 @@ blog.constant('blogConfig',{
     "site_name":"罗飞的技术分享博客",
     "pagesize":10,//每页显示文章数
     "duoshuo_domain":"luofeico",//多说评论，你在多说上申请的二级域名
-    "categories":["PHP","ThinkPHP","服务器","数据库","前端","javascript","bootstrap","angularjs","phonegap","go","python","工具"],
+    "categories":["PHP","ThinkPHP","服务器","数据库","前端","javascript","jQuery","bootstrap","angularjs","phonegap","go","python","工具","编辑器"],
     "AVOS_ID":"l33c40ot1nhdgzkc5ljh2dzn2i8z4jaxlr40zyhmqbxjc1lp",
     "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y",
     "header_pics":[
