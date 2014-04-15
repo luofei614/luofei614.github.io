@@ -14,6 +14,9 @@ blog.constant('blogConfig',{
         {name:"图片4",url:"/image/header_pic/4.png"}
     ]
 });
+blog.constant('angularMomentConfig', {
+        timezone: 'Atlantic/Azores' 
+});
 //##########服务
 blog.factory('article',function($resource){
    return $resource('https://cn.avoscloud.com/1/classes/article/:objectId',{objectId:'@objectId'},{
