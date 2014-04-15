@@ -4,7 +4,7 @@ blog.constant('blogConfig',{
     "site_name":"罗飞的技术分享博客",
     "pagesize":10,//每页显示文章数
     "duoshuo_domain":"luofeico",//多说评论，你在多说上申请的二级域名
-    "categories":["php","go","python","javascript","bootstrap","angularjs"],
+    "categories":["PHP","ThinkPHP","服务器","数据库","前端","javascript","bootstrap","angularjs","phonegap","go","python","工具"],
     "AVOS_ID":"l33c40ot1nhdgzkc5ljh2dzn2i8z4jaxlr40zyhmqbxjc1lp",
     "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y",
     "header_pics":[
@@ -123,36 +123,38 @@ blog.filter('all',function(){
 
 
 //##########指令
-blog.directive('blogEditor',function(){
+blog.directive('blogEditor',function($timeout){
     return {
         restrict:"EA",
         require:"?ngModel",
         link:function(scope,element,attrs,ngModel){
             	KindEditor.basePath = '/editor/';
                 var inited=false;
-			    KindEditor.create(element,{
-                    minWidth :560,
-					allowPreviewEmoticons : false,
-					allowImageUpload : false,
-                    afterChange:function(){
-                       scope.$apply();
-                       KindEditor.sync(element); 
-                       if(ngModel)
-                       {
-                           // ngModel.$setViewValue(element.val());
-                           if(inited)
+                //使用$timeout，保证模板变量被渲染后才执行编辑器初始化， 防止编辑器中没有数据。
+                $timeout(function(){
+                    KindEditor.create(element,{
+                        minWidth :560,
+                        allowPreviewEmoticons : false,
+                        allowImageUpload : false,
+                        afterChange:function(){
+                           KindEditor.sync(element); 
+                           if(ngModel)
                            {
-                                //第一次加载不执行change ，否则 formname.fieldname.$dirty 判断会有误。 
-                                element.trigger('change');
+                               // ngModel.$setViewValue(element.val());
+                               if(inited)
+                               {
+                                    //第一次加载不执行change ，否则 formname.fieldname.$dirty 判断会有误。 
+                                    element.trigger('change');
+                               }
                            }
-                       }
-                       inited=true;
-                    },
-					items : [
-						'source','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-						'insertunorderedlist', '|', 'emoticons', 'image', 'link','fullscreen'] 
-                });
+                           inited=true;
+                        },
+                        items : [
+                            'source','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                            'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                            'insertunorderedlist', '|', 'emoticons', 'image', 'link','fullscreen'] 
+                    });
+                },0)
         }
     }
 });
