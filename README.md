@@ -44,16 +44,21 @@ Github Page 使用十分简单，可参考官方教程：https://pages.github.co
  
 
  - 获得应用KEY
-进入应用， 在设置-->应用key ， 能获得ID和KEY。修改源码script/app.js文件中的相应配置。 
+进入应用， 在设置-->应用key ， 能获得ID和KEY。修改源码script/app.js文件中的相应配置.
+
 ![enter image description here][1]
 ![enter image description here][2]
  - 建立用户， 在数据-->_User 中手动添加一行数据，输入用户名和密码。 添加完数据后，为了安全，我们要设置_User对象的权限。
+
  ![enter image description here][3]
 ![enter image description here][4]
+
  设置_User对象的add_fields,create,delete,update的操作权限只能为刚才创建的用户。get和find的权限为public。
  - 发布文章
     进行完上面的设置后，现在访问网站，会提示
+
 ![enter image description here][5]
+
 这是因为我们还没有创建文章的数据对象， 在网站的底部点击“管理员登陆”，然后输入之前你创建的用户名和密码，进行登陆。 登陆再在网站底部点击“发布文章”， 发布你的第一篇文章， 文章发布后同时会在AVOS创建一个名为article的数据对象。  为了安全，我们同样要设置这个数据对象的权限和_User数据对象的权限设置一样，add_fields,create,delete,update的操作权限只能为刚才创建的用户。get和find的权限为public。
 
 ####4，绑定一级域名。 
