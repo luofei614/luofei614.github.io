@@ -5,8 +5,15 @@ blog.constant('blogConfig',{
     "pagesize":10,//每页显示文章数
     "duoshuo_domain":"luofeico",//多说评论，你在多说上申请的二级域名
     "categories":["PHP","ThinkPHP","服务器","数据库","前端","HTML5","CSS","javascript","jQuery","bootstrap","angularjs","phonegap","go","python","工具","编辑器"],
+    //数据存储到AVOS中
+    //AVOS相关配置,请到https://cn.avoscloud.com/,创建应用
     "AVOS_ID":"l33c40ot1nhdgzkc5ljh2dzn2i8z4jaxlr40zyhmqbxjc1lp",
     "AVOS_KEY":"fzho7uxsmpqwsvvopblxyd3ma6d25u999ena17hyuid7865y",
+    //编辑器图片上传到sinastroage中。
+    //sinastorage相关配置， 请到http://open.sinastorage.com/ 创建应用
+    "sinastorage_bucket":"blogimg",
+    "sinastorage_ak":"qzig55nG0OMQg0mkmrDM",
+    "sinastorage_sk":"851480070f8b80891e19d1dffd824186c0161b0c",
     "header_pics":[
         {name:"图片1",url:"/image/header_pic/1.png"},
         {name:"图片2",url:"/image/header_pic/2.png"},
@@ -91,7 +98,7 @@ blog.factory('blogModal',function($rootScope,$http,$templateCache,$compile,$cont
        }).error(function(){
           alert('请求模板地址：'+templateUrl+'失败');
        });
-    } 
+    }; 
 });
 
 //##########过滤
@@ -126,7 +133,7 @@ blog.filter('all',function(){
 
 
 //##########指令
-blog.directive('blogEditor',function($timeout){
+blog.directive('blogEditor',function($timeout,blogConfig){
     return {
         restrict:"EA",
         require:"?ngModel",
@@ -139,6 +146,9 @@ blog.directive('blogEditor',function($timeout){
                         minWidth :560,
                         allowPreviewEmoticons : false,
                         allowImageUpload : false,
+                        sinastorage_bucket:blogConfig.sinastorage_bucket,
+                        sinastorage_ak:blogConfig.sinastorage_ak,
+                        sinastorage_sk:blogConfig.sinastorage_sk,
                         afterChange:function(){
                            KindEditor.sync(element); 
                            if(ngModel)
@@ -155,11 +165,11 @@ blog.directive('blogEditor',function($timeout){
                         items : [
                             'source','|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
                             'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                            'insertunorderedlist', '|', 'emoticons', 'image', 'link','fullscreen'] 
+                            'insertunorderedlist', '|', 'emoticons', 'sinaupload', 'link','more','fullscreen'] 
                     });
-                },0)
+                },0);
         }
-    }
+    };
 });
 //##########控制器
 blog.config(function($routeProvider,$locationProvider,$httpProvider,blogConfig){

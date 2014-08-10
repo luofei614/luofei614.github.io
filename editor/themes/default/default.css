@@ -193,6 +193,13 @@
 	width: 16px;
 	height: 16px;
 }
+
+.ke-icon-sinaupload {
+	background-position: 0px -496px;
+	width: 16px;
+	height: 16px;
+}
+
 .ke-icon-flash {
 	background-position: 0px -512px;
 	width: 16px;
@@ -334,6 +341,11 @@
 	height: 16px;
 }
 .ke-icon-lineheight {
+	background-position: 0px -992px;
+	width: 16px;
+	height: 16px;
+}
+.ke-icon-more {
 	background-position: 0px -992px;
 	width: 16px;
 	height: 16px;
